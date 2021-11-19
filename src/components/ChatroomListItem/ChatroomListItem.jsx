@@ -1,10 +1,10 @@
 const ChatroomListItem = ({ chatroom }) => {
   return (
     <tr>
-      <td>{chatroom.creator}</td>
+      <td>{chatroom.creator.username}</td>
       <td>{chatroom.name}</td>
       <td>{chatroom.users.length}</td>
-      <td>Today</td>
+      <td>{chatroom.updatedAt.substring(11, 16)}</td>
     </tr>
   )
 }

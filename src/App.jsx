@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Routes, Route } from 'react-router-dom'
 import ChatroomList from './components/ChatroomsList/ChatroomList';
-import Navbar from './components/Navbar/Navbar'
 
 function App() {
   const restUri = "http://localhost:5000/api";
@@ -15,12 +14,12 @@ function App() {
     }
 
     getChatrooms();
-  }, [chatrooms]);
+  }, []);
 
   const fetchChatrooms = async () => {
     try {
       const res = await fetch(`${restUri}/chatrooms/`, {method: "GET"});
-      return await res.json();
+      return res.json();
     } 
     catch (err) {
       return ({'error': err});
@@ -29,8 +28,6 @@ function App() {
 
   return (
     <div className='container-fluid'>
-      <Navbar />
-
       <Routes>
         <Route path="/" element={<ChatroomList chatrooms={chatrooms} />}></Route>
         <Route path="/chatrooms/new-chatroom/"></Route>

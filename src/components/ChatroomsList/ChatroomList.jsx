@@ -3,7 +3,7 @@ import ChatroomListItem from '../ChatroomListItem/ChatroomListItem'
 
 const ChatroomList = ({ chatrooms }) => {
   return (
-    <table>
+    <table id='chatrooms_list'>
       <tr>
         <th>CREATOR</th>
         <th>NAME</th>

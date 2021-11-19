@@ -2,6 +2,7 @@ import './chatrooms_list_style.css'
 import ChatroomListItem from '../ChatroomListItem/ChatroomListItem'
 
 const ChatroomList = ({ chatrooms }) => {
+  chatrooms.sort((a,b) => (a.updatedAt < b.updatedAt) ? 1 : ((b.updatedAt < a.updatedAt) ? -1 : 0))
   return (
     <table id='chatrooms_list'>
       <tr>

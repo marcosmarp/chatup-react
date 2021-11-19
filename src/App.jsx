@@ -14,7 +14,7 @@ function App() {
     }
 
     getChatrooms();
-  }, []);
+  }, [chatrooms]);
 
   const fetchChatrooms = async () => {
     try {

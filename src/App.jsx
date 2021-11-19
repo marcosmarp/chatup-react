@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react'
 import { Routes, Route } from 'react-router-dom'
 import ChatroomList from './components/ChatroomsList/ChatroomList';
+import CommandLine from './components/CommandLine/CommandLine';
+import Header from './components/Header/Header'
 
 function App() {
   const restUri = "http://localhost:5000/api";
@@ -28,10 +30,8 @@ function App() {
 
   return (
     <div className='container-fluid'>
-      <Routes>
-        <Route path="/" element={<ChatroomList chatrooms={chatrooms} />}></Route>
-        <Route path="/chatrooms/new-chatroom/"></Route>
-      </Routes>
+      <Header />
+      <CommandLine />
     </div>
   );
 }

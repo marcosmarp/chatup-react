@@ -28,10 +28,14 @@ function App() {
     }
   }
 
+  const processCommand = async(command) => {
+    console.log(command);
+  }
+
   return (
     <div className='container-fluid'>
       <Header />
-      <CommandLine />
+      <CommandLine onSubmit={processCommand}/>
     </div>
   );
 }

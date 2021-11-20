@@ -1,12 +1,11 @@
 import { useState, useEffect } from 'react'
-import { Routes, Route } from 'react-router-dom'
 import ChatroomList from './components/ChatroomsList/ChatroomList';
 import CommandInput from './components/CommandInput/CommandInput';
 import Header from './components/Header/Header'
 import ConsoleOutput from './components/ConsoleOutput/ConsoleOutput'
 import CommandLine from './components/CommandLine/CommandLine'
-import moduleName from './components/UnknownCommand/UnknownCommand'
 import UnknownCommand from './components/UnknownCommand/UnknownCommand';
+import CommandsList from './components/CommandsList/CommandsList'
 
 function App() {
   const restUri = "http://localhost:5000/api";
@@ -41,6 +40,28 @@ function App() {
       );
     });
     switch(command) {
+      case 'clear':
+        setChildrens([]);
+        break;
+
+      case ':help':
+        setChildrens(childrens => {
+          return (
+            [...childrens,
+            <CommandsList />]
+          );
+        });
+        break;
+      
+      case 'chatrooms list':
+        setChildrens(childrens => {
+          return (
+            [...childrens,
+            <ChatroomList chatrooms={chatrooms} />]
+          );
+        });
+        break;
+
       default:
         setChildrens(childrens => {
           return (

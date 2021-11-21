@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import './register_form_style.css';
+import './auth_form_style.css';
 
 const RegisterForm = ({ onSubmit }) => {
   const [displayPasswordInput, setDisplayPasswordInput] = useState(false);
@@ -27,7 +27,7 @@ const RegisterForm = ({ onSubmit }) => {
         <span>Username:&nbsp;</span>
         <input 
         type="text" 
-        className="registration_input" 
+        className="auth_input" 
         autoFocus 
         value={username}
         onChange={(e) => setUsername(e.target.value)} 
@@ -40,7 +40,7 @@ const RegisterForm = ({ onSubmit }) => {
           <span>Password:&nbsp;</span>
           <input 
           type="password" 
-          className="registration_input" 
+          className="auth_input" 
           autoFocus 
           value={password}
           onChange={(e) => setPassword(e.target.value)} 

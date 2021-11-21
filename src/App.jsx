@@ -6,7 +6,7 @@ import ConsoleOutput from './components/ConsoleOutput/ConsoleOutput'
 import CommandLine from './components/CommandLine/CommandLine'
 import UnknownCommand from './components/UnknownCommand/UnknownCommand';
 import CommandsList from './components/CommandsList/CommandsList'
-import RegisterForm from './components/RegisterForm/RegisterForm'
+import AuthForm from './components/AuthForm/AuthForm'
 
 function App() {
   const restUri = "http://localhost:5000/api";
@@ -25,12 +25,89 @@ function App() {
     }
 
     getChatrooms();
-  }, [chatrooms]);
+  }, []);
 
   const fetchChatrooms = async () => {
     try {
       const res = await fetch(`${restUri}/chatrooms/`, {method: "GET"});
       return res.json();
+    } 
+    catch (err) {
+      return ({'error': err});
+    }
+  }
+
+  const logIn = async (username, password) => {
+    try {
+      const res = await fetch(`${restUri}/users/auth/log-in/`, {
+        method: "POST",
+        'headers': {
+          'Content-type': 'application/json'
+        },
+        body: JSON.stringify({
+          "username": username,
+          "password": password
+        })
+      });
+      const response = await res.json();
+      
+      if (response.success) {
+        if (response.authenticated) {
+          setChildrens(childrens => {
+            return (
+              [...childrens,
+              <span>Logged in</span>]
+            );
+          });
+        } else {
+          setChildrens(childrens => {
+            return (
+              [...childrens,
+              <span className='text-danger'>Wrong password</span>]
+            );
+          });
+        }
+      }
+      else {
+        switch (response.error) {
+          case "unexistent username":
+            setChildrens(childrens => {
+              return (
+                [...childrens,
+                <span className='text-danger'>That username isn't registered, try 'register'</span>]
+              );
+            });
+            break;
+
+          case "empty username":
+            setChildrens(childrens => {
+              return (
+                [...childrens,
+                <span className='text-danger'>Username can't be empty</span>]
+              );
+            });
+            break;
+
+          case "empty password":
+            setChildrens(childrens => {
+              return (
+                [...childrens,
+                <span className='text-danger'>Password can't be empty</span>]
+              );
+            });
+            break;
+          
+          default:
+            setChildrens(childrens => {
+              return (
+                [...childrens,
+                <span className='text-danger'>Internal server error, try again later</span>]
+              );
+            });
+            break;
+        }
+      }
+      setDisplayInput(true);
     } 
     catch (err) {
       return ({'error': err});
@@ -51,7 +128,7 @@ function App() {
       });
       const response = await res.json();
       
-      if (response.success === true) {
+      if (response.success) {
         setChildrens(childrens => {
           return (
             [...childrens,
@@ -134,7 +211,17 @@ function App() {
         setChildrens(childrens => {
           return (
             [...childrens,
-            <RegisterForm onSubmit={registerUser} />]
+            <AuthForm onSubmit={registerUser} />]
+          );
+        });
+        break;
+      
+      case 'log in':
+        setDisplayInput(false);
+        setChildrens(childrens => {
+          return (
+            [...childrens,
+            <AuthForm onSubmit={logIn} />]
           );
         });
         break;

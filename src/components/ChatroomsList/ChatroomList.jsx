@@ -10,9 +10,10 @@ const ChatroomList = ({ chatrooms }) => {
         <th>NAME</th>
         <th>ACTIVE USERS</th>
         <th>LAST ENTRY</th>
+        <th>SELECT CODE</th>
       </tr>
-      {chatrooms.map((chatroom) => (
-        <ChatroomListItem chatroom={chatroom} />
+      {chatrooms.map((chatroom, index) => (
+        <ChatroomListItem chatroom={chatroom} selectCode={index} key={chatroom._id} />
       ))}
     </table>
   )

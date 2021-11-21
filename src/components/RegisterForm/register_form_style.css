@@ -1,0 +1,12 @@
+.registration_input {
+  background-color: transparent;
+  border-width: 0px;
+}
+
+.registration_input:focus {
+  outline: none;
+}
+
+#form_username {
+  display: flex;
+}

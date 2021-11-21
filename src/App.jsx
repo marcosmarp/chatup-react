@@ -6,17 +6,22 @@ import ConsoleOutput from './components/ConsoleOutput/ConsoleOutput'
 import CommandLine from './components/CommandLine/CommandLine'
 import UnknownCommand from './components/UnknownCommand/UnknownCommand';
 import CommandsList from './components/CommandsList/CommandsList'
+import RegisterForm from './components/RegisterForm/RegisterForm'
 
 function App() {
   const restUri = "http://localhost:5000/api";
 
   const [chatrooms, setChatrooms] = useState([]);
   const [childrens, setChildrens] = useState([]);
+  const [displayInput, setDisplayInput] = useState(true);
 
   useEffect(() => {
     const getChatrooms = async () => {
-      const serverChatrooms = await fetchChatrooms();
-      setChatrooms(serverChatrooms);
+      const response = await fetchChatrooms();
+      if (response.success === true) {
+        const serverChatrooms = response.chatrooms;
+        setChatrooms(serverChatrooms);
+      }
     }
 
     getChatrooms();
@@ -32,6 +37,74 @@ function App() {
     }
   }
 
+  const registerUser = async (username, password) => {
+    try {
+      const res = await fetch(`${restUri}/users/auth/register/`, {
+        method: "POST",
+        'headers': {
+          'Content-type': 'application/json'
+        },
+        body: JSON.stringify({
+          "username": username,
+          "password": password
+        })
+      });
+      const response = await res.json();
+      
+      if (response.success === true) {
+        setChildrens(childrens => {
+          return (
+            [...childrens,
+            <span>Registed new user</span>]
+          );
+        });
+      }
+      else {
+        switch (response.error) {
+          case "username taken":
+            setChildrens(childrens => {
+              return (
+                [...childrens,
+                <span className='text-danger'>Username already registered</span>]
+              );
+            });
+            break;
+
+          case "empty username":
+            setChildrens(childrens => {
+              return (
+                [...childrens,
+                <span className='text-danger'>Username can't be empty</span>]
+              );
+            });
+            break;
+
+          case "empty password":
+            setChildrens(childrens => {
+              return (
+                [...childrens,
+                <span className='text-danger'>Password can't be empty</span>]
+              );
+            });
+            break;
+          
+          default:
+            setChildrens(childrens => {
+              return (
+                [...childrens,
+                <span className='text-danger'>Internal server error, try again later</span>]
+              );
+            });
+            break;
+        }
+      }
+      setDisplayInput(true);
+    } 
+    catch (err) {
+      return ({'error': err});
+    }
+  }
+
   const processCommand = async (command) => {
     setChildrens(childrens => {
       return (
@@ -40,6 +113,9 @@ function App() {
       );
     });
     switch(command) {
+      case '':
+        break;
+
       case 'clear':
         setChildrens([]);
         break;
@@ -49,6 +125,16 @@ function App() {
           return (
             [...childrens,
             <CommandsList />]
+          );
+        });
+        break;
+
+      case 'register':
+        setDisplayInput(false);
+        setChildrens(childrens => {
+          return (
+            [...childrens,
+            <RegisterForm onSubmit={registerUser} />]
           );
         });
         break;
@@ -75,8 +161,9 @@ function App() {
   return (
     <div className='container-fluid'>
       <Header />
+      <h6>For available commands, enter :help</h6>
       <ConsoleOutput childrens={childrens}/>
-      <CommandInput onSubmit={processCommand} firstEntry={childrens.length}/>
+      {displayInput && <CommandInput onSubmit={processCommand} />}
     </div>
   );
 }

@@ -15,18 +15,6 @@ function App() {
   const [childrens, setChildrens] = useState([]);
   const [displayInput, setDisplayInput] = useState(true);
 
-  useEffect(() => {
-    const getChatrooms = async () => {
-      const response = await fetchChatrooms();
-      if (response.success === true) {
-        const serverChatrooms = response.chatrooms;
-        setChatrooms(serverChatrooms);
-      }
-    }
-
-    getChatrooms();
-  }, []);
-
   const fetchChatrooms = async () => {
     try {
       const res = await fetch(`${restUri}/chatrooms/`, {method: "GET"});
@@ -34,6 +22,14 @@ function App() {
     } 
     catch (err) {
       return ({'error': err});
+    }
+  }
+
+  const updateChatrooms = async () => {
+    const response = await fetchChatrooms();
+    if (response.success === true) {
+      const serverChatrooms = response.chatrooms;
+      setChatrooms(serverChatrooms);
     }
   }
 
@@ -256,6 +252,7 @@ function App() {
         break;
       
       case 'chatrooms list':
+        await updateChatrooms();
         setChildrens(childrens => {
           return (
             [...childrens,

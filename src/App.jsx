@@ -114,6 +114,31 @@ function App() {
     }
   }
 
+  const logOut = async () => {
+    try {
+      const res = await fetch(`${restUri}/users/auth/log-out/`, {method: "POST"});
+      const response = await res.json();
+      if (response.success) {
+        setChildrens(childrens => {
+          return (
+            [...childrens,
+            <span>Logged out</span>]
+          );
+        });
+      } else {
+        setChildrens(childrens => {
+          return (
+            [...childrens,
+            <span className='text-danger'>Internal server error, try again later</span>]
+          );
+        });
+      }
+    }
+    catch (err) {
+      return ({'error': err});
+    }
+  }
+
   const registerUser = async (username, password) => {
     try {
       const res = await fetch(`${restUri}/users/auth/register/`, {
@@ -224,6 +249,10 @@ function App() {
             <AuthForm onSubmit={logIn} />]
           );
         });
+        break;
+
+      case 'log out':
+        logOut();
         break;
       
       case 'chatrooms list':

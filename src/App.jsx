@@ -7,6 +7,7 @@ import CommandLine from './components/CommandLine/CommandLine'
 import UnknownCommand from './components/UnknownCommand/UnknownCommand';
 import CommandsList from './components/CommandsList/CommandsList'
 import AuthForm from './components/AuthForm/AuthForm'
+import Chatroom from './components/Chatroom/Chatroom';
 
 function App() {
   const restUri = "http://localhost:5000/api";
@@ -25,13 +26,28 @@ function App() {
     }
   }
 
-  const updateChatrooms = async () => {
-    const response = await fetchChatrooms();
-    if (response.success === true) {
-      const serverChatrooms = response.chatrooms;
-      setChatrooms(serverChatrooms);
+  const fetchChatroom = async () => {
+    try {
+      const res = await fetch(`${restUri}/chatrooms/6196ed4d30402f37562940de/`, {method: "GET"});
+      const response = await res.json();
+      if (response.success) return response.chatroom;
+    } 
+    catch (err) {
+      return ({'error': err});
     }
   }
+
+  useEffect(() => {
+    const getChatrooms = async () => {
+      const response = await fetchChatrooms();
+      if (response.success === true) {
+        const serverChatrooms = response.chatrooms;
+        setChatrooms(serverChatrooms);
+      }
+    }
+
+    getChatrooms();
+  }, [chatrooms]);
 
   const logIn = async (username, password) => {
     try {
@@ -252,11 +268,21 @@ function App() {
         break;
       
       case 'chatrooms list':
-        await updateChatrooms();
         setChildrens(childrens => {
           return (
             [...childrens,
             <ChatroomList chatrooms={chatrooms} />]
+          );
+        });
+        break;
+
+      case 'chatrooms select':
+        setDisplayInput(false);
+        const chatroom = await fetchChatroom();
+        setChildrens(childrens => {
+          return (
+            [...childrens,
+            <Chatroom chatroom={chatroom} />]
           );
         });
         break;
@@ -275,7 +301,7 @@ function App() {
     <div className='container-fluid'>
       <Header />
       <h6>For available commands, enter :help</h6>
-      <ConsoleOutput childrens={childrens}/>
+      <ConsoleOutput childrens={childrens} />
       {displayInput && <CommandInput onSubmit={processCommand} />}
     </div>
   );

@@ -1,13 +1,16 @@
-import { useState } from 'react'
+import { useState, useCallback } from 'react'
 import './auth_form_style.css';
 
-const RegisterForm = ({ onSubmit }) => {
+const RegisterForm = ({ onSubmit, setDisplayInput }) => {
+  setDisplayInput(false);
+
   const [displayPasswordInput, setDisplayPasswordInput] = useState(false);
 
   const [disablePasswordInput, setDisablePasswordInput] = useState(false);
   const [disableUsernameInput, setDisableUsernameInput] = useState(false);
   const [password, setPassword] = useState('');
   const [username, setUsername] = useState('');
+  const [serverResponse, setServerResponse] = useState('');
   
   const onUsernameSubmit = (key) => {
     if (key === "Enter") {
@@ -15,12 +18,16 @@ const RegisterForm = ({ onSubmit }) => {
       setDisableUsernameInput(true);
     };
   }
-  const onPasswordSubmit = (key) => {
+  const onPasswordSubmit = async (key) => {
     if (key === "Enter") {
-      onSubmit(username, password);
+      const response = await onSubmit(username, password);
+      setServerResponse(response);
       setDisablePasswordInput(true);
     };
   }
+
+  if (disablePasswordInput) setDisplayInput(true);
+
   return (
     <div className="h6" id='registration_form'>
       <div className="form_username">
@@ -39,16 +46,17 @@ const RegisterForm = ({ onSubmit }) => {
         <div className="form_password">
           <span>Password:&nbsp;</span>
           <input 
-          type="password" 
-          className="auth_input" 
-          autoFocus 
-          value={password}
-          onChange={(e) => setPassword(e.target.value)} 
-          onKeyDown={(e) => onPasswordSubmit(e.key)}
-          disabled={disablePasswordInput}
+            type="password" 
+            className="auth_input" 
+            autoFocus 
+            value={password}
+            onChange={(e) => setPassword(e.target.value)} 
+            onKeyDown={(e) => onPasswordSubmit(e.key)}
+            disabled={disablePasswordInput}
           />
         </div>
       }
+      {serverResponse}
     </div>
   )
 }

@@ -1,20 +1,18 @@
 import { useState, useEffect } from 'react'
-import ChatroomList from './components/ChatroomsList/ChatroomList';
 import CommandInput from './components/CommandInput/CommandInput';
-import Header from './components/Header/Header'
-import ConsoleOutput from './components/ConsoleOutput/ConsoleOutput'
-import CommandLine from './components/CommandLine/CommandLine'
-import UnknownCommand from './components/UnknownCommand/UnknownCommand';
-import CommandsList from './components/CommandsList/CommandsList'
-import AuthForm from './components/AuthForm/AuthForm'
-import Chatroom from './components/Chatroom/Chatroom';
+import Header from './components/Header/Header';
+import ConsoleOutput from './components/ConsoleOutput/ConsoleOutput';
+import ErrorMessage from './components/ErrorMessage/ErrorMessage';
+import SuccessMessage from './components/SuccessMessage/SuccessMessage';
+
 
 function App() {
   const restUri = "http://localhost:5000/api";
 
   const [chatrooms, setChatrooms] = useState([]);
-  const [childrens, setChildrens] = useState([]);
+  const [commands, setCommands] = useState([]);
   const [displayInput, setDisplayInput] = useState(true);
+  const [wipeConsole, setWipeConsole] = useState(false);
 
   const fetchChatrooms = async () => {
     try {
@@ -26,21 +24,10 @@ function App() {
     }
   }
 
-  const fetchChatroom = async () => {
-    try {
-      const res = await fetch(`${restUri}/chatrooms/6196ed4d30402f37562940de/`, {method: "GET"});
-      const response = await res.json();
-      if (response.success) return response.chatroom;
-    } 
-    catch (err) {
-      return ({'error': err});
-    }
-  }
-
   useEffect(() => {
     const getChatrooms = async () => {
       const response = await fetchChatrooms();
-      if (response.success === true) {
+      if (response.success) {
         const serverChatrooms = response.chatrooms;
         setChatrooms(serverChatrooms);
       }
@@ -54,7 +41,7 @@ function App() {
       const res = await fetch(`${restUri}/users/auth/log-in/`, {
         method: "POST",
         'headers': {
-          'Content-type': 'application/json'
+          'Content-type': 'application/json',
         },
         body: JSON.stringify({
           "username": username,
@@ -64,62 +51,24 @@ function App() {
       const response = await res.json();
       
       if (response.success) {
-        if (response.authenticated) {
-          setChildrens(childrens => {
-            return (
-              [...childrens,
-              <span>Logged in</span>]
-            );
-          });
-        } else {
-          setChildrens(childrens => {
-            return (
-              [...childrens,
-              <span className='text-danger'>Wrong password</span>]
-            );
-          });
-        }
+        if (response.authenticated) return <SuccessMessage message={"Logged in"} />
+        else return <ErrorMessage message={"Wrong password"} />;
       }
       else {
         switch (response.error) {
           case "unexistent username":
-            setChildrens(childrens => {
-              return (
-                [...childrens,
-                <span className='text-danger'>That username isn't registered, try 'register'</span>]
-              );
-            });
-            break;
+            return <ErrorMessage message={"Username is not registered, try 'register'"} />;
 
           case "empty username":
-            setChildrens(childrens => {
-              return (
-                [...childrens,
-                <span className='text-danger'>Username can't be empty</span>]
-              );
-            });
-            break;
+            return <ErrorMessage message={"Username can't be empty"} />;
 
           case "empty password":
-            setChildrens(childrens => {
-              return (
-                [...childrens,
-                <span className='text-danger'>Password can't be empty</span>]
-              );
-            });
-            break;
+            return <ErrorMessage message={"Password can't be empty"} />;
           
           default:
-            setChildrens(childrens => {
-              return (
-                [...childrens,
-                <span className='text-danger'>Internal server error, try again later</span>]
-              );
-            });
-            break;
+            return <ErrorMessage message={"Internal server error, try again later"} />;
         }
       }
-      setDisplayInput(true);
     } 
     catch (err) {
       return ({'error': err});
@@ -130,21 +79,8 @@ function App() {
     try {
       const res = await fetch(`${restUri}/users/auth/log-out/`, {method: "POST"});
       const response = await res.json();
-      if (response.success) {
-        setChildrens(childrens => {
-          return (
-            [...childrens,
-            <span>Logged out</span>]
-          );
-        });
-      } else {
-        setChildrens(childrens => {
-          return (
-            [...childrens,
-            <span className='text-danger'>Internal server error, try again later</span>]
-          );
-        });
-      }
+      if (response.success) return <SuccessMessage message={"Logged out"} />;
+      else return <ErrorMessage message={"Internal server error, try again later"} />;
     }
     catch (err) {
       return ({'error': err});
@@ -165,144 +101,57 @@ function App() {
       });
       const response = await res.json();
       
-      if (response.success) {
-        setChildrens(childrens => {
-          return (
-            [...childrens,
-            <span>Registed new user</span>]
-          );
-        });
-      }
+      if (response.success) return <SuccessMessage message={"Registered new user"} />;
       else {
         switch (response.error) {
           case "username taken":
-            setChildrens(childrens => {
-              return (
-                [...childrens,
-                <span className='text-danger'>Username already registered</span>]
-              );
-            });
-            break;
+            return <ErrorMessage message={"Username already registered"} />;
 
           case "empty username":
-            setChildrens(childrens => {
-              return (
-                [...childrens,
-                <span className='text-danger'>Username can't be empty</span>]
-              );
-            });
-            break;
+            return <ErrorMessage message={"Username can't be empty"} />;
 
           case "empty password":
-            setChildrens(childrens => {
-              return (
-                [...childrens,
-                <span className='text-danger'>Password can't be empty</span>]
-              );
-            });
-            break;
+            return <ErrorMessage message={"Password can't be empty"} />;
           
           default:
-            setChildrens(childrens => {
-              return (
-                [...childrens,
-                <span className='text-danger'>Internal server error, try again later</span>]
-              );
-            });
-            break;
+            return <ErrorMessage message={"Internal server error, try again later"} />;
         }
-      }
-      setDisplayInput(true);
+      }    
     } 
     catch (err) {
       return ({'error': err});
     }
   }
 
-  const processCommand = async (command) => {
-    setChildrens(childrens => {
+  const storeCommand = async (command) => {
+    setCommands(commands => {
       return (
-        [...childrens,
-        <CommandLine value={command} />]
+        [...commands,
+        command]
       );
     });
-    switch(command) {
-      case '':
-        break;
-
-      case 'clear':
-        setChildrens([]);
-        break;
-
-      case ':help':
-        setChildrens(childrens => {
-          return (
-            [...childrens,
-            <CommandsList />]
-          );
-        });
-        break;
-
-      case 'register':
-        setDisplayInput(false);
-        setChildrens(childrens => {
-          return (
-            [...childrens,
-            <AuthForm onSubmit={registerUser} />]
-          );
-        });
-        break;
-      
-      case 'log in':
-        setDisplayInput(false);
-        setChildrens(childrens => {
-          return (
-            [...childrens,
-            <AuthForm onSubmit={logIn} />]
-          );
-        });
-        break;
-
-      case 'log out':
-        logOut();
-        break;
-      
-      case 'chatrooms list':
-        setChildrens(childrens => {
-          return (
-            [...childrens,
-            <ChatroomList chatrooms={chatrooms} />]
-          );
-        });
-        break;
-
-      case 'chatrooms select':
-        setDisplayInput(false);
-        const chatroom = await fetchChatroom();
-        setChildrens(childrens => {
-          return (
-            [...childrens,
-            <Chatroom chatroom={chatroom} />]
-          );
-        });
-        break;
-
-      default:
-        setChildrens(childrens => {
-          return (
-            [...childrens,
-            <UnknownCommand command={command} />]
-          );
-        });
-    }
   }
+
+  if (wipeConsole) {
+    setWipeConsole(false);
+    setCommands([]);
+  };
 
   return (
     <div className='container-fluid'>
       <Header />
       <h6>For available commands, enter :help</h6>
-      <ConsoleOutput childrens={childrens} />
-      {displayInput && <CommandInput onSubmit={processCommand} />}
+      <ConsoleOutput 
+        commands={commands} 
+        registerUser={registerUser} 
+        setDisplayInput={setDisplayInput}
+        logIn={logIn}
+        logOut={logOut}
+        chatrooms={chatrooms}
+        setWipeConsole={setWipeConsole}
+        restUri={restUri}
+      />
+      {displayInput && <CommandInput onSubmit={storeCommand} />}
     </div>
   );
 }

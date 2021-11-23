@@ -1,3 +1,9 @@
+#chat_input_component_wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
 #chat_input_container {
   display: flex;
 }
@@ -11,3 +17,23 @@
 #chat_input:focus {
   outline: none;
 }
+
+.chat_loader {
+  width: 1rem;
+  height: 1rem;
+  border: .1rem solid #00FF66;
+  border-bottom-color: transparent;
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+
+@keyframes rotation {
+  0% {
+      transform: rotate(0deg);
+  }
+  100% {
+      transform: rotate(360deg);
+  }
+} 

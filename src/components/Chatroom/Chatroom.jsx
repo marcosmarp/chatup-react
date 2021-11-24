@@ -1,10 +1,14 @@
 import ChatsList from '../ChatsList/ChatsList'
 import './chatroom_style.css'
 import ChatInput from '../ChatInput/ChatInput'
+import ErrorMessage from '../ErrorMessage/ErrorMessage'
+import Loader from '../Loader/Loader'
 import { useEffect, useState } from 'react';
 
-const Chatroom = ({ chatroomId, setDisplayInput, restUri }) => {
+const Chatroom = ({ setDisplayInput, restUri, keyword, selectCode }) => {
   setDisplayInput(false);
+  const [invalidChatroom, setInvalidChatroom] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const [chatroom, setChatroom] = useState({
     "_id": "",
@@ -19,7 +23,7 @@ const Chatroom = ({ chatroomId, setDisplayInput, restUri }) => {
 
   const fetchChatroom = async () => {
     try {
-      const res = await fetch(`${restUri}/chatrooms/${chatroomId}/`, {method: "GET"});
+      const res = await fetch(`${restUri}/chatrooms/${keyword}/${selectCode}/`, {method: "GET"});
       return res.json();
     } 
     catch (err) {
@@ -30,22 +34,33 @@ const Chatroom = ({ chatroomId, setDisplayInput, restUri }) => {
   useEffect(() => {
     const getChatroom = async () => {
       const res = await fetchChatroom();
+      setLoading(false);
+
       if (res.success) {
         const serverChatroom = res.chatroom;
         setChatroom(serverChatroom);
+      } else {
+        setInvalidChatroom(true);
       }
     }
 
     getChatroom();
   }, [chatroom]);
   
+  if (invalidChatroom) setDisplayInput(true);
 
   return (
-    <div id="chatroom_container" className="h6">
-      <h5 id='chatroom_title'>"{chatroom.name}" by {chatroom.creator.username}</h5>
-      <ChatsList chats={chatroom.chats.slice(-10)} />
-      <ChatInput chatroomId={chatroomId} restUri={restUri} setDisplayInput={setDisplayInput}/>
-    </div>
+    <>
+      {loading && <Loader />}
+      {(!invalidChatroom && !loading) ?
+        <div id="chatroom_container" className="h6">
+          <h5 id='chatroom_title'>"{chatroom.name}" by {chatroom.creator.username}</h5>
+          <ChatsList chats={chatroom.chats.slice(-10)} />
+          <ChatInput chatroomId={chatroom._id} restUri={restUri} setDisplayInput={setDisplayInput}/>
+        </div>
+        : (!loading) && <ErrorMessage message={"Unexistent chatroom, try 'chatroom search <keyword>' to see the select codes"} />
+      } 
+    </>   
   )
 }
 

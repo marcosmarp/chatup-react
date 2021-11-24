@@ -37,7 +37,7 @@ const ChatroomList = ({ keyword, restUri }) => {
     getChatrooms();
   }, [chatrooms]);
   
-  //chatrooms.sort((a,b) => (a.activeUsers < b.activeUsers) ? 1 : ((b.activeUsers < a.activeUsers) ? -1 : 0));
+  chatrooms.sort((a,b) => (a.activeUsers < b.activeUsers) ? 1 : ((b.activeUsers < a.activeUsers) ? -1 : 0));
 
   return (
     <>

@@ -1,7 +1,7 @@
 const ChatListItem = ({ chat }) => {
   return (
     <span className="chat_list_item">
-       {chat.creator.username}: {chat.content}
+       <small>({chat.createdAt.substring(11, 16)})</small>&nbsp;{chat.creator.username}: {chat.content}
     </span>
   )
 }

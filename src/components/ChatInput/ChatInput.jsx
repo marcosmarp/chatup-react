@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
 import './chat_input_style.css'
+import Loader from '../Loader/Loader';
 
 const ChatInput = ({ restUri, chatroomId, setDisplayInput }) => {
   const [chat, setChat] = useState('');
@@ -83,7 +84,7 @@ const ChatInput = ({ restUri, chatroomId, setDisplayInput }) => {
           autoFocus
           disabled={exitTrigger}
         />
-        {displayLoading && <span className="chat_loader"></span>}
+        {displayLoading && <Loader />}
       </div>
       {displayErrorMessage && <ErrorMessage message={errorMessage} />}
       <small>':exit' to leave</small>

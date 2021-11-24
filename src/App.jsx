@@ -9,32 +9,9 @@ import SuccessMessage from './components/SuccessMessage/SuccessMessage';
 function App() {
   const restUri = "http://localhost:5000/api";
 
-  const [chatrooms, setChatrooms] = useState([]);
   const [commands, setCommands] = useState([]);
   const [displayInput, setDisplayInput] = useState(true);
   const [wipeConsole, setWipeConsole] = useState(false);
-
-  const fetchChatrooms = async () => {
-    try {
-      const res = await fetch(`${restUri}/chatrooms/`, {method: "GET"});
-      return res.json();
-    } 
-    catch (err) {
-      return ({'error': err});
-    }
-  }
-
-  useEffect(() => {
-    const getChatrooms = async () => {
-      const response = await fetchChatrooms();
-      if (response.success) {
-        const serverChatrooms = response.chatrooms;
-        setChatrooms(serverChatrooms);
-      }
-    }
-
-    getChatrooms();
-  }, [chatrooms]);
 
   const logIn = async (username, password) => {
     try {
@@ -147,7 +124,6 @@ function App() {
         setDisplayInput={setDisplayInput}
         logIn={logIn}
         logOut={logOut}
-        chatrooms={chatrooms}
         setWipeConsole={setWipeConsole}
         restUri={restUri}
       />

@@ -17,9 +17,8 @@ function App() {
     try {
       const res = await fetch(`${restUri}/users/auth/log-in/`, {
         method: "POST",
-        'headers': {
-          'Content-type': 'application/json',
-        },
+        headers: {'Content-type': 'application/json'},
+        credentials: 'include',
         body: JSON.stringify({
           "username": username,
           "password": password
@@ -54,7 +53,11 @@ function App() {
 
   const logOut = async () => {
     try {
-      const res = await fetch(`${restUri}/users/auth/log-out/`, {method: "POST"});
+      const res = await fetch(`${restUri}/users/auth/log-out/`, {
+        method: "POST",
+        headers: {'Content-type': 'application/json'},
+        credentials: 'include',
+      });
       const response = await res.json();
       if (response.success) return <SuccessMessage message={"Logged out"} />;
       else return <ErrorMessage message={"Internal server error, try again later"} />;
@@ -68,9 +71,8 @@ function App() {
     try {
       const res = await fetch(`${restUri}/users/auth/register/`, {
         method: "POST",
-        'headers': {
-          'Content-type': 'application/json'
-        },
+        headers: {'Content-type': 'application/json'},
+        credentials: 'include',
         body: JSON.stringify({
           "username": username,
           "password": password

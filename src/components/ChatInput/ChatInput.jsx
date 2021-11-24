@@ -14,9 +14,8 @@ const ChatInput = ({ restUri, chatroomId, setDisplayInput }) => {
     try {
       const res = await fetch(`${restUri}/chatrooms/${chatroomId}/chats/`, {
         method: "POST",
-        'headers': {
-          'Content-type': 'application/json'
-        },
+        headers: {'Content-type': 'application/json'},
+        credentials: 'include',
         body: JSON.stringify({"content": content})
     });
       return res.json();

@@ -11,7 +11,11 @@ const ChatroomList = ({ keyword, restUri }) => {
 
   const fetchChatrooms = async () => {
     try {
-      const res = await fetch(`${restUri}/chatrooms/${keyword}/`, {method: "GET"});
+      const res = await fetch(`${restUri}/chatrooms/${keyword}/`, {
+        method: "GET",
+        headers: {'Content-type': 'application/json'},
+        credentials: 'include',
+      });
       return res.json();
     } 
     catch (err) {

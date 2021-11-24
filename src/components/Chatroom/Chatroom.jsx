@@ -23,7 +23,11 @@ const Chatroom = ({ setDisplayInput, restUri, keyword, selectCode }) => {
 
   const fetchChatroom = async () => {
     try {
-      const res = await fetch(`${restUri}/chatrooms/${keyword}/${selectCode}/`, {method: "GET"});
+      const res = await fetch(`${restUri}/chatrooms/${keyword}/${selectCode}/`, {
+        method: "GET",
+        headers: {'Content-type': 'application/json'},
+        credentials: 'include'
+      });
       return res.json();
     } 
     catch (err) {

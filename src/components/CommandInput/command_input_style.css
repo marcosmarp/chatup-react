@@ -8,6 +8,8 @@
   margin-left: .5rem;
   background-color: transparent;
   border-width: 0px;
+  width: 80vw;
+  text-transform: lowercase;
 }
 
 #input_command:focus {

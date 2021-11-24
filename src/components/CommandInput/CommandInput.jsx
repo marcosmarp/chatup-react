@@ -30,7 +30,7 @@ const CommandLine = ({ onSubmit }) => {
           type="text" 
           id="input_command" 
           value={command} 
-          onChange={(e) => setCommand(e.target.value)} 
+          onChange={(e) => setCommand(e.target.value.toLowerCase())} 
           onKeyDown={(e) => onKeyPress(e.key)}
           autoComplete='off'
           autoFocus

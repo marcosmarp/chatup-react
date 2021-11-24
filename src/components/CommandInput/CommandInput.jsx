@@ -2,13 +2,24 @@ import './command_input_style.css';
 import { useState } from 'react'
 
 const CommandLine = ({ onSubmit }) => {
-  const [command, setCommand] = useState('')
+  const [command, setCommand] = useState('');
+  const [previousCommand, setPreviousCommand] = useState('');
   
   const onKeyPress = (key) => {
+    if (key === "ArrowUp") {
+      setCommand(previousCommand);
+    }
+
+    if (key === "ArrowDown") {
+      setCommand('');
+    }
+
     if (key === "Enter") {
       onSubmit(command);
+      setPreviousCommand(command);
       setCommand('');
     };
+
   }
 
   return (

@@ -58,7 +58,7 @@ const Chatroom = ({ setDisplayInput, restUri, keyword, selectCode }) => {
           <ChatsList chats={chatroom.chats.slice(-10)} />
           <ChatInput chatroomId={chatroom._id} restUri={restUri} setDisplayInput={setDisplayInput}/>
         </div>
-        : (!loading) && <ErrorMessage message={"Unexistent chatroom, try 'chatroom search <keyword>' to see the select codes"} />
+        : (!loading) && <ErrorMessage message={"Unexistent chatroom, try 'chatroom search <topic>' to see the select codes"} />
       } 
     </>   
   )

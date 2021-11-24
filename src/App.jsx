@@ -8,7 +8,7 @@ import SuccessMessage from './components/SuccessMessage/SuccessMessage';
 
 function App() {
   const restUri = "http://localhost:5000/api";
-
+  
   const [commands, setCommands] = useState([]);
   const [displayInput, setDisplayInput] = useState(true);
   const [wipeConsole, setWipeConsole] = useState(false);

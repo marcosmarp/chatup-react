@@ -1,7 +1,7 @@
 import { useState, useCallback } from 'react'
 import './auth_form_style.css';
 
-const RegisterForm = ({ onSubmit, setDisplayInput }) => {
+const AuthForm = ({ onSubmit, setDisplayInput }) => {
   setDisplayInput(false);
 
   const [displayPasswordInput, setDisplayPasswordInput] = useState(false);
@@ -61,4 +61,4 @@ const RegisterForm = ({ onSubmit, setDisplayInput }) => {
   )
 }
 
-export default RegisterForm
+export default AuthForm

@@ -8,8 +8,9 @@ import CommandLine from '../CommandLine/CommandLine'
 import LogOut from '../LogOut/LogOut';
 import { useState } from 'react';
 import ErrorMessage from '../ErrorMessage/ErrorMessage'
+import NewChatroomForm from '../NewChatroomForm/NewChatroomForm';
 
-const ConsoleOutput = ({ commands, registerUser, setDisplayInput, logIn, logOut, setWipeConsole, restUri }) => {
+const ConsoleOutput = ({ commands, registerUser, setDisplayInput, logIn, logOut, setWipeConsole, restUri, createChatroom }) => {
   const processCommand = (command) => {
     var keyword;
     switch(command) {
@@ -31,6 +32,9 @@ const ConsoleOutput = ({ commands, registerUser, setDisplayInput, logIn, logOut,
 
       case 'log out':
         return <LogOut logOut={logOut} />;
+
+      case 'chatrooms new':
+        return <NewChatroomForm setDisplayInput={setDisplayInput} onSubmit={createChatroom}/>
       
       case command.match(/^chatrooms search [^\s]+$/)?.input:
         keyword = command.replace(/^chatrooms search /, '');

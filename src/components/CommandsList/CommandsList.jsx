@@ -30,6 +30,11 @@ const CommandsList = () => {
       </tr>
       <tr>
         <td>Chatrooms</td>
+        <td>chatrooms new</td>
+        <td>Starts new chatroom creation process</td>
+      </tr>
+      <tr>
+        <td>Chatrooms</td>
         <td>chatrooms search {"<topic>"}</td>
         <td>Searchs for chatrooms that matches the specified {"<topic>"}</td>
       </tr>

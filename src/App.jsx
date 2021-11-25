@@ -7,11 +7,22 @@ import SuccessMessage from './components/SuccessMessage/SuccessMessage';
 
 
 function App() {
-  const restUri = "http://192.168.1.113:5000/api";
+  const restUri = "http://localhost:5000/api";
   
   const [commands, setCommands] = useState([]);
   const [displayInput, setDisplayInput] = useState(true);
   const [wipeConsole, setWipeConsole] = useState(false);
+
+    
+  const getSession = async () => {
+    const res = await fetch(`${restUri}/session/`, {
+      method: "GET",
+      headers: {'Content-type': 'application/json'},
+      credentials: 'include'
+    });
+    console.log(await res.json());
+  }
+
 
   const logIn = async (username, password) => {
     try {
@@ -43,6 +54,37 @@ function App() {
           
           default:
             return <ErrorMessage message={"Internal server error, try again later"} />;
+        }
+      }
+    } 
+    catch (err) {
+      return ({'error': err});
+    }
+  }
+
+  const createChatroom = async (name, keywords) => {
+    try {
+      const res = await fetch(`${restUri}/chatrooms/`, {
+        method: "POST",
+        headers: {'Content-type': 'application/json'},
+        credentials: 'include',
+        body: JSON.stringify({
+          "name": name,
+          "keywords": keywords
+        })
+      });
+      const response = await res.json();
+      
+      if (response.success) {
+        return <SuccessMessage message={"Created chatroom"} />
+      }
+      else {
+        switch (response.error) {
+          case "not authenticated":
+            return <ErrorMessage message={"You have to log in to create a chatroom"} />;
+
+          case "empty username":
+            return <ErrorMessage message={"Username can't be empty"} />;
         }
       }
     } 
@@ -128,8 +170,10 @@ function App() {
         logOut={logOut}
         setWipeConsole={setWipeConsole}
         restUri={restUri}
+        createChatroom={createChatroom}
       />
       {displayInput && <CommandInput onSubmit={storeCommand} />}
+      <button onClick={getSession} className='btn btn-primary'>SESSION</button>
     </div>
   );
 }

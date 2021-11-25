@@ -8,3 +8,12 @@ html, body {
   font-family: 'Inconsolata', monospace;
   color: #00FF66;
 }
+
+input {
+  background-color: transparent;
+  border-width: 0px;
+}
+
+input:focus {
+  outline: none;
+}

@@ -1,9 +1,15 @@
 import './command_input_style.css';
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 
-const CommandLine = ({ onSubmit }) => {
+const CommandLine = ({ onSubmit, commandInputRef }) => {
   const [command, setCommand] = useState('');
   const [previousCommand, setPreviousCommand] = useState('');
+
+  useEffect(() => {
+    // Moving cursor to the end
+    commandInputRef.current.selectionStart = commandInputRef.current.value.length;
+    commandInputRef.current.selectionEnd = commandInputRef.current.value.length;
+  }, [command]);
   
   const onKeyPress = (key) => {
     if (key === "ArrowUp") {
@@ -34,6 +40,7 @@ const CommandLine = ({ onSubmit }) => {
           onKeyDown={(e) => onKeyPress(e.key)}
           autoComplete='off'
           autoFocus
+          ref={commandInputRef}
         />
       </div>
     </div>

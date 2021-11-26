@@ -9,6 +9,7 @@ import LogOut from '../LogOut/LogOut';
 import NewChatroomForm from '../NewChatroomForm/NewChatroomForm';
 import About from '../About/About'
 import RemoveChatroom from '../RemoveChatroom/RemoveChatroom';
+import DeleteChatroom from '../DeleteChatroom/DeleteChatroom'
 
 const ConsoleOutput = ({ commands, setDisplayInput, restUri, clearScreen }) => {
   const processCommand = (command) => {
@@ -46,6 +47,10 @@ const ConsoleOutput = ({ commands, setDisplayInput, restUri, clearScreen }) => {
       case command.match(/chatrooms own remove \d$/)?.input:
         selectCode = command.replace(/^chatrooms own remove /, '');
         return <RemoveChatroom selectCode={selectCode} restUri={restUri} />
+
+      case command.match(/chatrooms own delete \d$/)?.input:
+        selectCode = command.replace(/^chatrooms own delete /, '');
+        return <DeleteChatroom selectCode={selectCode} restUri={restUri} />
 
       case command.match(/chatrooms own select \d$/)?.input:
         selectCode = command.replace(/^chatrooms own select /, '');

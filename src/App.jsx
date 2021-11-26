@@ -2,8 +2,6 @@ import { useState, useEffect, useRef } from 'react'
 import CommandInput from './components/CommandInput/CommandInput';
 import Header from './components/Header/Header';
 import ConsoleOutput from './components/ConsoleOutput/ConsoleOutput';
-import ErrorMessage from './components/ErrorMessage/ErrorMessage';
-import SuccessMessage from './components/SuccessMessage/SuccessMessage';
 
 
 function App() {

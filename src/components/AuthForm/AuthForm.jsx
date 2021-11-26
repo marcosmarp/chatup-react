@@ -104,6 +104,7 @@ const AuthForm = ({mode, setDisplayInput, restUri }) => {
 
   useEffect(() => {
     setDisplayInput(disablePasswordInput);
+    // eslint-disable-next-line
   }, [disablePasswordInput]);
 
   return (

@@ -1,5 +1,5 @@
 import './command_input_style.css';
-import { useState, useRef, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 
 const CommandLine = ({ onSubmit, commandInputRef }) => {
   const [command, setCommand] = useState('');
@@ -9,6 +9,7 @@ const CommandLine = ({ onSubmit, commandInputRef }) => {
     // Moving cursor to the end
     commandInputRef.current.selectionStart = commandInputRef.current.value.length;
     commandInputRef.current.selectionEnd = commandInputRef.current.value.length;
+    // eslint-disable-next-line
   }, [command]);
   
   const onKeyPress = (key) => {

@@ -28,6 +28,7 @@ const LogOut = ({ restUri }) => {
     }
 
     getLogOutResponse();
+    // eslint-disable-next-line
   }, []);
   
   return (

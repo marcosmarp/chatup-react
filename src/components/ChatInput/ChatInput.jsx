@@ -37,7 +37,7 @@ const ChatInput = ({ restUri, chatroomId, setDisplayInput }) => {
   const onSubmit = async () => {
     setDisplayErrorMessage(false);
     setDisplayLoading(true);
-    if (chat != '' && chat != ':exit') {
+    if (chat !== '' && chat !== ':exit') {
       const response = await postChat(chat);
       if (!response.success) {
         switch (response.error) {
@@ -78,6 +78,7 @@ const ChatInput = ({ restUri, chatroomId, setDisplayInput }) => {
 
   useEffect(()=> {
     setDisplayInput(exitTrigger);
+    // eslint-disable-next-line
   }, [exitTrigger]);
 
   return (

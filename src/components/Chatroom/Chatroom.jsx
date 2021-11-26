@@ -48,10 +48,12 @@ const Chatroom = ({ setDisplayInput, restUri, keyword, selectCode }) => {
     }
 
     getChatroom();
+    // eslint-disable-next-line
   }, [chatroom]);
   
   useEffect(()=> {
     setDisplayInput(invalidChatroom);
+    // eslint-disable-next-line
   }, [invalidChatroom]);
 
   return (

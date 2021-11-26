@@ -6,8 +6,6 @@ import Chatroom from '../Chatroom/Chatroom';
 import ChatroomList from '../ChatroomsList/ChatroomList';
 import CommandLine from '../CommandLine/CommandLine'
 import LogOut from '../LogOut/LogOut';
-import { useState } from 'react';
-import ErrorMessage from '../ErrorMessage/ErrorMessage'
 import NewChatroomForm from '../NewChatroomForm/NewChatroomForm';
 
 const ConsoleOutput = ({ commands, setDisplayInput, setWipeConsole, restUri }) => {

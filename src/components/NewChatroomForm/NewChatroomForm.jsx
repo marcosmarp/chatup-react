@@ -34,6 +34,9 @@ const NewChatroomForm = ({ setDisplayInput, restUri }) => {
 
           case "empty username":
             return <ErrorMessage message={"Username can't be empty"} />;
+          
+          default:
+            return <ErrorMessage message={"Internal server error, try again later"} />
         }
       }
     } 
@@ -56,6 +59,7 @@ const NewChatroomForm = ({ setDisplayInput, restUri }) => {
 
   useEffect(()=> {
     setDisplayInput(finishTrigger);
+    // eslint-disable-next-line
   }, [finishTrigger]);
 
   return (

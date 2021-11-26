@@ -35,6 +35,7 @@ const ChatroomList = ({ keyword, restUri }) => {
     }
 
     getChatrooms();
+    // eslint-disable-next-line
   }, [chatrooms]);
   
   chatrooms.sort((a,b) => (a.activeUsers < b.activeUsers) ? 1 : ((b.activeUsers < a.activeUsers) ? -1 : 0));

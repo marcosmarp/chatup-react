@@ -29,6 +29,8 @@ Starts the logging in process
 Ends the current user session
 ### `register`
 Starts the new user registration process
+### `chatrooms new`
+Starts new chatroom creation process
 ### `chatrooms own`
 List your currents active chatrooms
 ### `chatrooms own select <selectCode>`

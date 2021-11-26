@@ -9,7 +9,6 @@ function App() {
   
   const [commands, setCommands] = useState([]);
   const [displayInput, setDisplayInput] = useState(true);
-  const [wipeConsole, setWipeConsole] = useState(false);
   const commandInputRef = useRef(null);
 
   const scrollToRef = (ref) => window.scrollTo(0, ref.current.offsetTop);
@@ -36,10 +35,7 @@ function App() {
     });
   }
 
-  if (wipeConsole) {
-    setWipeConsole(false);
-    setCommands([]);
-  };
+  const clearScreen = () => setCommands([]);
 
   return (
     <div className='container-fluid'>
@@ -48,8 +44,8 @@ function App() {
       <ConsoleOutput 
         commands={commands}
         setDisplayInput={setDisplayInput}
-        setWipeConsole={setWipeConsole}
         restUri={restUri}
+        clearScreen={clearScreen}
       />
       {displayInput && <CommandInput onSubmit={storeCommand} commandInputRef={commandInputRef} />}
       <button onClick={getSession} className='btn btn-primary'>SESSION</button>

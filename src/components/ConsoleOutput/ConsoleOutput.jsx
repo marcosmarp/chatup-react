@@ -7,8 +7,9 @@ import ChatroomList from '../ChatroomsList/ChatroomList';
 import CommandLine from '../CommandLine/CommandLine'
 import LogOut from '../LogOut/LogOut';
 import NewChatroomForm from '../NewChatroomForm/NewChatroomForm';
+import { useEffect } from 'react';
 
-const ConsoleOutput = ({ commands, setDisplayInput, setWipeConsole, restUri }) => {
+const ConsoleOutput = ({ commands, setDisplayInput, restUri, clearScreen }) => {
   const processCommand = (command) => {
     var keyword;
     switch(command) {
@@ -16,7 +17,7 @@ const ConsoleOutput = ({ commands, setDisplayInput, setWipeConsole, restUri }) =
         break;
 
       case 'clear':
-        setWipeConsole(true);
+        clearScreen();
         break;
 
       case ':help':

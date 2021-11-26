@@ -16,15 +16,6 @@ function App() {
   useEffect(() => {
     scrollToRef(commandInputRef);
   }, [commands]);
-    
-  const getSession = async () => {
-    const res = await fetch(`${restUri}/session/`, {
-      method: "GET",
-      headers: {'Content-type': 'application/json'},
-      credentials: 'include'
-    });
-    console.log(await res.json());
-  }
 
   const storeCommand = async (command) => {
     setCommands(commands => {
@@ -48,7 +39,6 @@ function App() {
         clearScreen={clearScreen}
       />
       {displayInput && <CommandInput onSubmit={storeCommand} commandInputRef={commandInputRef} />}
-      <button onClick={getSession} className='btn btn-primary'>SESSION</button>
     </div>
   );
 }

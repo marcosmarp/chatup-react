@@ -7,7 +7,6 @@ import ChatroomList from '../ChatroomsList/ChatroomList';
 import CommandLine from '../CommandLine/CommandLine'
 import LogOut from '../LogOut/LogOut';
 import NewChatroomForm from '../NewChatroomForm/NewChatroomForm';
-import { useEffect } from 'react';
 
 const ConsoleOutput = ({ commands, setDisplayInput, restUri, clearScreen }) => {
   const processCommand = (command) => {

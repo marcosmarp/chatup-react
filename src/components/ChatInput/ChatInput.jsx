@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
 import SuccessMessage from '../SuccessMessage/SuccessMessage'
 import './chat_input_style.css'
@@ -76,9 +76,9 @@ const ChatInput = ({ restUri, chatroomId, setDisplayInput }) => {
     };
   }
 
-  if (exitTrigger) {
-    setDisplayInput(true);
-  }
+  useEffect(()=> {
+    setDisplayInput(exitTrigger);
+  }, [exitTrigger]);
 
   return (
     <div id='chat_input_component_wrapper'>

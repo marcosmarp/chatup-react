@@ -1,8 +1,7 @@
 import './new_chatroom_form_style.css'
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 const NewChatroomForm = ({ setDisplayInput, onSubmit }) => {
-  setDisplayInput(false);
 
   const [displayKeywords, setDisplayKeywords] = useState(false);
   const [finishTrigger, setFinishTrigger] = useState(false);
@@ -22,7 +21,9 @@ const NewChatroomForm = ({ setDisplayInput, onSubmit }) => {
     }
   }
 
-  if (finishTrigger) setDisplayInput(true);
+  useEffect(()=> {
+    setDisplayInput(finishTrigger);
+  }, [finishTrigger]);
 
   return (
     <div id="new_chatroom_form" className='h6'>

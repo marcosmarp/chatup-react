@@ -165,10 +165,6 @@ function App() {
     setCommands([]);
   };
 
-  const updateDisplayInput = (state) => {
-    setDisplayInput(state);
-  }
-
   return (
     <div className='container-fluid'>
       <Header />
@@ -176,7 +172,7 @@ function App() {
       <ConsoleOutput 
         commands={commands} 
         registerUser={registerUser} 
-        setDisplayInput={updateDisplayInput}
+        setDisplayInput={setDisplayInput}
         logIn={logIn}
         logOut={logOut}
         setWipeConsole={setWipeConsole}

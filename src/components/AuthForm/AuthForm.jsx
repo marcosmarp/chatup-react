@@ -1,9 +1,7 @@
-import { useState, useCallback } from 'react'
+import { useState, useEffect } from 'react'
 import './auth_form_style.css';
 
 const AuthForm = ({ onSubmit, setDisplayInput }) => {
-  setDisplayInput(false);
-
   const [displayPasswordInput, setDisplayPasswordInput] = useState(false);
 
   const [disablePasswordInput, setDisablePasswordInput] = useState(false);
@@ -26,7 +24,9 @@ const AuthForm = ({ onSubmit, setDisplayInput }) => {
     };
   }
 
-  if (disablePasswordInput) setDisplayInput(true);
+  useEffect(() => {
+    setDisplayInput(disablePasswordInput);
+  }, [disablePasswordInput]);
 
   return (
     <div className="h6" id='registration_form'>

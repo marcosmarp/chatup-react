@@ -6,7 +6,6 @@ import Loader from '../Loader/Loader'
 import { useEffect, useState } from 'react';
 
 const Chatroom = ({ setDisplayInput, restUri, keyword, selectCode }) => {
-  setDisplayInput(false);
   const [invalidChatroom, setInvalidChatroom] = useState(false);
   const [loading, setLoading] = useState(true);
 
@@ -51,7 +50,9 @@ const Chatroom = ({ setDisplayInput, restUri, keyword, selectCode }) => {
     getChatroom();
   }, [chatroom]);
   
-  if (invalidChatroom) setDisplayInput(true);
+  useEffect(()=> {
+    setDisplayInput(invalidChatroom);
+  }, [invalidChatroom]);
 
   return (
     <>

@@ -7,6 +7,7 @@ import ChatroomList from '../ChatroomsList/ChatroomList';
 import CommandLine from '../CommandLine/CommandLine'
 import LogOut from '../LogOut/LogOut';
 import NewChatroomForm from '../NewChatroomForm/NewChatroomForm';
+import About from '../About/About'
 
 const ConsoleOutput = ({ commands, setDisplayInput, restUri, clearScreen }) => {
   const processCommand = (command) => {
@@ -19,6 +20,9 @@ const ConsoleOutput = ({ commands, setDisplayInput, restUri, clearScreen }) => {
       case 'clear':
         clearScreen();
         break;
+
+      case 'about':
+        return <About />;
 
       case ':help':
         return <CommandsList />;

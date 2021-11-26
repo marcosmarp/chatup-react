@@ -17,6 +17,11 @@ const CommandsList = () => {
           <td>Resets the screen</td>
         </tr>
         <tr>
+          <td>Miscenallious</td>
+          <td>about</td>
+          <td>Displays information about the project and it's creator</td>
+        </tr>
+        <tr>
           <td>Users</td>
           <td>register</td>
           <td>Starts registration process for new user</td>

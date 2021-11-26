@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
+import SuccessMessage from '../SuccessMessage/SuccessMessage'
 import './chat_input_style.css'
 import Loader from '../Loader/Loader';
 
@@ -7,6 +8,7 @@ const ChatInput = ({ restUri, chatroomId, setDisplayInput }) => {
   const [chat, setChat] = useState('');
   const [displayErrorMessage, setDisplayErrorMessage] = useState(false);
   const [displayLoading, setDisplayLoading] = useState(false);
+  const [displayPostMessage, setDisplayPostMessage] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [exitTrigger, setExitTrigger] = useState(false);
 
@@ -23,6 +25,13 @@ const ChatInput = ({ restUri, chatroomId, setDisplayInput }) => {
     catch (err) {
       return ({'error': err});
     }
+  }
+
+  const displayAndHidePostMessage = () => {
+    setDisplayPostMessage(true);
+    setTimeout(() => {
+      setDisplayPostMessage(false);
+    }, 3500);
   }
 
   const onSubmit = async () => {
@@ -49,6 +58,8 @@ const ChatInput = ({ restUri, chatroomId, setDisplayInput }) => {
             break;
         }
         setDisplayErrorMessage(true);
+      } else {
+        displayAndHidePostMessage();
       }
     }
 
@@ -86,6 +97,7 @@ const ChatInput = ({ restUri, chatroomId, setDisplayInput }) => {
         {displayLoading && <Loader />}
       </div>
       {displayErrorMessage && <ErrorMessage message={errorMessage} />}
+      {displayPostMessage && <SuccessMessage message={"Chat sent - Changes will be reflected in a second"} />}
       <small>':exit' to leave</small>
     </div>
   )

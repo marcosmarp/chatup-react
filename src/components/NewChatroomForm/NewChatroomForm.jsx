@@ -1,13 +1,46 @@
 import './new_chatroom_form_style.css'
 import { useState, useEffect } from 'react';
+import SuccessMessage from '../SuccessMessage/SuccessMessage';
+import ErrorMessage from '../ErrorMessage/ErrorMessage';
 
-const NewChatroomForm = ({ setDisplayInput, onSubmit }) => {
+const NewChatroomForm = ({ setDisplayInput, restUri }) => {
 
   const [displayKeywords, setDisplayKeywords] = useState(false);
   const [finishTrigger, setFinishTrigger] = useState(false);
   const [name, setName] = useState('');
   const [keywords, setKeywords] = useState('');
-  const [serverResponse, setServerResponse] = useState('');
+  const [serverResponse, setServerResponse] = useState(<></>);
+
+  const createChatroom = async (name, keywords) => {
+    try {
+      const res = await fetch(`${restUri}/chatrooms/`, {
+        method: "POST",
+        headers: {'Content-type': 'application/json'},
+        credentials: 'include',
+        body: JSON.stringify({
+          "name": name,
+          "keywords": keywords
+        })
+      });
+      const response = await res.json();
+      
+      if (response.success) {
+        return <SuccessMessage message={"Created chatroom"} />
+      }
+      else {
+        switch (response.error) {
+          case "not authenticated":
+            return <ErrorMessage message={"You have to log in to create a chatroom"} />;
+
+          case "empty username":
+            return <ErrorMessage message={"Username can't be empty"} />;
+        }
+      }
+    } 
+    catch (err) {
+      return <ErrorMessage message={err} />;
+    }
+  }
 
   const onNameSubmit = (key) => {
     if (key === "Enter") setDisplayKeywords(true);
@@ -16,7 +49,7 @@ const NewChatroomForm = ({ setDisplayInput, onSubmit }) => {
   const onKeywordsSubmit = async (key) => {
     if (key === "Enter") {
       setFinishTrigger(true);
-      const response = await onSubmit(name, keywords);
+      const response = await createChatroom(name, keywords);
       setServerResponse(response);
     }
   }

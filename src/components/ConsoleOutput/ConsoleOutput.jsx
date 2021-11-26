@@ -10,7 +10,7 @@ import { useState } from 'react';
 import ErrorMessage from '../ErrorMessage/ErrorMessage'
 import NewChatroomForm from '../NewChatroomForm/NewChatroomForm';
 
-const ConsoleOutput = ({ commands, registerUser, setDisplayInput, logIn, logOut, setWipeConsole, restUri, createChatroom }) => {
+const ConsoleOutput = ({ commands, setDisplayInput, setWipeConsole, restUri }) => {
   const processCommand = (command) => {
     var keyword;
     switch(command) {
@@ -25,16 +25,16 @@ const ConsoleOutput = ({ commands, registerUser, setDisplayInput, logIn, logOut,
         return <CommandsList />;
 
       case 'register':
-        return <AuthForm onSubmit={registerUser} setDisplayInput={setDisplayInput} />;
+        return <AuthForm setDisplayInput={setDisplayInput} restUri={restUri} mode={true} />;
       
       case 'log in':
-        return <AuthForm onSubmit={logIn} setDisplayInput={setDisplayInput} />;
+        return <AuthForm setDisplayInput={setDisplayInput} restUri={restUri} mode={false} />;
 
       case 'log out':
-        return <LogOut logOut={logOut} />;
+        return <LogOut restUri={restUri} />;
 
       case 'chatrooms new':
-        return <NewChatroomForm setDisplayInput={setDisplayInput} onSubmit={createChatroom}/>
+        return <NewChatroomForm setDisplayInput={setDisplayInput} restUri={restUri}/>
       
       case command.match(/^chatrooms search [^\s]+$/)?.input:
         keyword = command.replace(/^chatrooms search /, '');

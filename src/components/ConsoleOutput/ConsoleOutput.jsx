@@ -12,6 +12,7 @@ import { useEffect } from 'react';
 const ConsoleOutput = ({ commands, setDisplayInput, restUri, clearScreen }) => {
   const processCommand = (command) => {
     var keyword;
+    var selectCode;
     switch(command) {
       case '':
         break;
@@ -34,6 +35,13 @@ const ConsoleOutput = ({ commands, setDisplayInput, restUri, clearScreen }) => {
 
       case 'chatrooms new':
         return <NewChatroomForm setDisplayInput={setDisplayInput} restUri={restUri}/>
+
+      case 'chatrooms own':
+        return <ChatroomList keyword={'own'} restUri={restUri} />;
+
+      case command.match(/chatrooms own select \d$/)?.input:
+        selectCode = command.replace(/^chatrooms own select /, '');
+        return <Chatroom keyword={'own'} selectCode={selectCode} setDisplayInput={setDisplayInput} restUri={restUri} />;
       
       case command.match(/^chatrooms search [^\s]+$/)?.input:
         keyword = command.replace(/^chatrooms search /, '');
@@ -41,7 +49,7 @@ const ConsoleOutput = ({ commands, setDisplayInput, restUri, clearScreen }) => {
 
       case command.match(/^chatrooms search [^\s]+ select \d$/)?.input:
         keyword = command.replace(/^chatrooms search /, '').replace(/ select \d$/, '');
-        const selectCode = command.replace(/^chatrooms search [^\s]+ select /, '');
+        selectCode = command.replace(/^chatrooms search [^\s]+ select /, '');
         return <Chatroom keyword={keyword} selectCode={selectCode} setDisplayInput={setDisplayInput} restUri={restUri} />;
 
       default:

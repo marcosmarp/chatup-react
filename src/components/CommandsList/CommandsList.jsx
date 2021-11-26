@@ -38,6 +38,16 @@ const CommandsList = () => {
         </tr>
         <tr>
           <td>Chatrooms</td>
+          <td>chatrooms own</td>
+          <td>List your active chatrooms</td>
+        </tr>
+        <tr>
+          <td>Chatrooms</td>
+          <td>chatrooms own select {"<selectCode>"}</td>
+          <td>Select a chatroom between your chatrooms (to see the select codes, run 'chatrooms own')</td>
+        </tr>
+        <tr>
+          <td>Chatrooms</td>
           <td>chatrooms search {"<topic>"}</td>
           <td>Searchs for chatrooms that matches the specified {"<topic>"}</td>
         </tr>

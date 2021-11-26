@@ -6,6 +6,7 @@ import Loader from '../Loader/Loader';
 
 const ChatroomList = ({ keyword, restUri }) => {
   const [chatrooms, setChatrooms] = useState([]);
+  const [errorMessage, setErrorMessage] = useState('');
   const [allowErrorMessage, setAllowErrorMessage] = useState(false);
   const [allowChatroomListLoader, setAllowChatroomListLoader] = useState(true);
 
@@ -26,12 +27,15 @@ const ChatroomList = ({ keyword, restUri }) => {
   useEffect(() => {
     const getChatrooms = async () => {
       const response = await fetchChatrooms();
+      setAllowChatroomListLoader(false);
+      setAllowErrorMessage(true);
       if (response.success) {
-        setAllowErrorMessage(true);
-        setAllowChatroomListLoader(false);
         const serverChatrooms = response.chatrooms;
         setChatrooms(serverChatrooms);
-      }
+
+        setErrorMessage("No matches for your search");
+        if (keyword === 'own') setErrorMessage("You don´t have any chatrooms yet, try 'chatrooms search <topic>'");
+      } else if (response.error === "not authenticated") setErrorMessage("Log in to see your chatrooms");
     }
 
     getChatrooms();
@@ -61,7 +65,7 @@ const ChatroomList = ({ keyword, restUri }) => {
         </table>
         : allowChatroomListLoader && <Loader />
       }
-      {(!chatrooms.length && allowErrorMessage) && <ErrorMessage message={"No matches for your search"} />}
+      {(!chatrooms.length && allowErrorMessage) && <ErrorMessage message={errorMessage} />}
     </>  
   )
 }

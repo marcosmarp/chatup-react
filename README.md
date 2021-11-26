@@ -1,70 +1,45 @@
-# Getting Started with Create React App
+# ChatUp React client
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## What's this?
+This is the front end client for a chatrooms terminal-like application. It's designed for the [ChatUp REST server](https://github.com/marcosmarp/chatup-rest/) but you can implement it with your own server.
+You can find the stable release in the [ChatUp repo](https://github.com/marcosmarp/chatup/) (this one containes both the client and the API)
 
-## Available Scripts
+## What do you mean with *terminal-like*?
+The idea of this client is to ressemble the UNIX-based terminals, so we have an input and a commands history on screen:
 
-In the project directory, you can run:
+![image](https://user-images.githubusercontent.com/88422056/143583069-a0004f62-42ba-4098-95c2-d455556c64fe.png)
 
-### `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## License
+This project is MIT licensed so use it freely without holding my accountable for his correct functionality.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Contributions
+Just open an issue or a PR, I'm open to anything that improves or adds new features to the project
 
-### `npm test`
+## Available commands
+### `clear`
+Clears the screen
+### `:help`
+Displays the available commands
+### `about`
+Displays the info of the project
+### `log in`
+Starts the logging in process
+### `log out`
+Ends the current user session
+### `register`
+Starts the new user registration process
+### `chatrooms own`
+List your currents active chatrooms
+### `chatrooms own select <selectCode>`
+Select a chatroom between your chatrooms (to see the select codes, run `chatrooms own`)
+### `chatrooms own remove <selectCode>`
+Removes a chatroom from your chatrooms (to see the select codes, run `chatrooms own`)
+### `chatrooms own delete <selectCode>`
+Deletes a chatroom (you have to be the creator to do this) (to see the select codes, run `chatrooms own`)
+### `chatrooms search <topic>`
+Searchs for chatrooms that matches the specified `<topic>`
+### `chatrooms search <topic> select <selectCode>`
+Select a chatroom between the chatrooms that matches the specified `<topic>` (to see the select codes, run `chatrooms search topic`)
+### *more to come*
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)

@@ -11,7 +11,7 @@ The idea of this client is to ressemble the UNIX-based terminals, so we have an 
 
 
 ## License
-This project is MIT licensed so use it freely without holding my accountable for his correct functionality.
+This project is MIT licensed so use it freely without holding me accountable for his correct functionality.
 
 ## Contributions
 Just open an issue or a PR, I'm open to anything that improves or adds new features to the project
